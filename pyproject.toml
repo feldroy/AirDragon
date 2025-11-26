@@ -1,10 +1,11 @@
 [project]
 name = "AirDragon"
-version = "0.1.1"
+version = "0.2.0"
 description = "Air + BasecoatUI + TailwindCSS made easy."
 readme = "README.md"
 authors = [
-    { name = "Daniel Roy Greenfeld", email = "daniel@feldroy.com" }
+    { name = "Daniel Roy Greenfeld", email = "daniel@feldroy.com" },
+    { name = "Audrey Roy Greenfeld", email = "audrey@feldroy.com" },
 ]
 requires-python = ">=3.13"
 dependencies = [
