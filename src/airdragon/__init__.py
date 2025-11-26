@@ -1,5 +1,6 @@
 from .layouts import layout as layout
-from .tags import (DragonTag as DragonTag,
+from .tags import (
+    DragonTag as DragonTag,
     Mods as Mods,
     Alert as Alert,
     Badge as Badge,
@@ -7,5 +8,5 @@ from .tags import (DragonTag as DragonTag,
     Button as Button,
     ButtonGroup as ButtonGroup,
     Card as Card,
-    H1 as H1
+    H1 as H1,
 )
