@@ -1,19 +1,26 @@
 from functools import cached_property
 from enum import StrEnum, EnumType
-from typing import Any
 
 import air
 from air.tags.utils import locals_cleanup
 from air.tags.types import Renderable, AttributeType
 
 
-# modifiers = StrEnum('Modifiers', 'secondary', 'destructive', 'outline')
-
 class Mods(StrEnum):
     destructive = 'destructive'
     secondary = 'secondary'
     outline = 'outline'
 
+class ButtonMods(StrEnum):
+    destructive = 'destructive'
+    secondary = 'secondary'
+    outline = 'outline'   
+    ghost = 'ghost'
+    link = 'link'     
+    # size
+    sm = 'sm'
+    lg = 'lg'
+    # TODO add icons and combinations
 
 
 class DragonTag(air.BaseTag):
@@ -82,17 +89,6 @@ class Badge(DragonTag):
 
     def render(self) -> str:
         return f"""<span{self.attrs}>{self.children}</span>"""   
-    
-class ButtonMods(StrEnum):
-    destructive = 'destructive'
-    secondary = 'secondary'
-    outline = 'outline'   
-    ghost = 'ghost'
-    link = 'link'     
-    # size
-    sm = 'sm'
-    lg = 'lg'
-    # TODO add icons and combinations
 
 
 class Button(DragonTag):
@@ -126,3 +122,7 @@ class Card(DragonTag):
 
     def render(self) -> str:
         return f"""<div{self.attrs}>{self.children}</div>"""
+    
+
+class H1(DragonTag):
+    class_ = 'text-3xl sm:text-4xl font-semibold leading-tight'

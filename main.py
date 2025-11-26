@@ -6,5 +6,18 @@ app = air.Air()
 @app.page
 def index():
     return ad.layout(
-        air.H1('Hello, world', class_="text-3xl")
+        ad.H1('Hello, world', class_='Dragons'),
+        ad.Card(
+            air.Header(
+                air.H2('Card title'),
+                air.P('I am a handy paragraph.')
+            ),
+            air.Section(
+                ad.ButtonGroup(
+                    ad.Button('Click me'),
+                    ad.Button("Don't click me", modifier=ad.ButtonMods.destructive)
+                )
+            )
+        )        
     )
+
