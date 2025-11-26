@@ -24,7 +24,7 @@ class ButtonMods(StrEnum):
     # TODO add icons and combinations
 
 
-class DragonTag(air.BaseTag):
+class _BaseTag:
     class_: str | None
 
     @cached_property
@@ -58,6 +58,14 @@ class DragonTag(air.BaseTag):
         )
 
 
+class DragonTag(_BaseTag, air.BaseTag):
+    pass
+
+
+class DragonTagSelfClosing(_BaseTag, air.SelfClosingTag):
+    pass
+
+
 class Alert(DragonTag):
     class_ = "alert"
 
@@ -77,7 +85,33 @@ class Alert(DragonTag):
 
 
 class Article(DragonTag):
-    class_ = "flex flex-col gap-4 sm:flex-row sm:flex-wrap"
+    class_ = "flex flex-col gap-4 sm:flex-row sm:flex-wrap py-2"
+
+
+class Avatar(DragonTagSelfClosing):
+    class_ = "size-8 shrink-0 object-cover rounded-full"
+
+    def __init__(
+        self,
+        *,
+        src: str,
+        class_: str | None = None,
+        id: str | None = None,
+        style: str | None = None,
+        modifier: Mods | str = "",
+        **kwargs: AttributeType,
+    ) -> None:
+        super().__init__(**kwargs | locals_cleanup(locals()))
+
+    def render(self):
+        return f"""<img{self.attrs}/>"""
+
+
+class AvatarGroup(DragonTag):
+    class_ = "flex -space-x-3"
+
+    def render(self) -> str:
+        return f"""<div{self.attrs}>{self.children}</div>"""
 
 
 class Badge(DragonTag):
@@ -132,3 +166,7 @@ class Card(DragonTag):
 
 class H1(DragonTag):
     class_ = "text-3xl sm:text-4xl font-semibold leading-tight"
+
+
+class H2(DragonTag):
+    class_ = "text-2xl sm:text-3xl font-semibold leading-tight"
