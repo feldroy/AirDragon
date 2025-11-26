@@ -1,0 +1,22 @@
+[project]
+name = "AirDragon"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Daniel Roy Greenfeld", email = "daniel@feldroy.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "air[standard]>=0.41.1",
+]
+
+[build-system]
+requires = ["uv_build>=0.9.11,<0.10.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.1",
+    "ruff>=0.14.6",
+]
