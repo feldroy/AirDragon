@@ -76,6 +76,10 @@ class Alert(DragonTag):
         return f"""<div{self.attrs}>{self.children}</div>"""
 
 
+class Article(DragonTag):
+    class_ = "flex flex-col gap-4 sm:flex-row sm:flex-wrap"
+
+
 class Badge(DragonTag):
     class_ = "badge"
 
