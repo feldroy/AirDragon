@@ -2,7 +2,15 @@
 
 _Air + BasecoatUI made easy._
 
-AirDragon is a powerful framework that combines the capabilities of Air with the simplicity of BasecoatUI, allowing developers to create stunning user interfaces with ease. Whether you're building web applications, mobile apps, or desktop software, AirDragon provides the tools you need to bring your vision to life.
+AirDragon combines the capabilities of [Air]() with the simplicity of [BasecoatUI](https://basecoatui.com/) and the deep power of [Tailwind](https://tailwindcss.com/), allowing developers to create stunning user interfaces with ease. Whether you're building web applications, mobile apps, or desktop software, AirDragon provides the tools you need to bring your vision to life.
+
+## Mandate
+
+1. Provide a simple way to use BasecoatUI and Tailwind with Air.
+2. Offer pre-built components and layouts that leverage BasecoatUI's design principles.
+3. Ensure seamless integration with Air's existing features and functionalities and design theme.
+4. No need to learn any Tailwind classes, just use AirDragon components.
+5. Make it easy to customize and extend the components to fit specific project needs. 
 
 
 ## Installation
@@ -13,9 +21,10 @@ To install AirDragon's Python component, run the following command in your termi
 uv add airdragon
 ```
 
-AirDragon's `layout` function handles the JS dependencies for you, but if you need to include them in Jinja, use the following HTML snippets:
+AirDragon's `layout()` function handles the JS dependencies for you, but if you need to include them in Jinja, use the following HTML snippets:
 
 ```html
+<!-- Jinja base template, for Air Tags use airdragon.layout() -->
 <!doctype html>
 <html>
   <head>
@@ -32,7 +41,31 @@ AirDragon's `layout` function handles the JS dependencies for you, but if you ne
 </html>
 ``` 
 
+## Usage
 
+To use AirDragon in your Air application, simply import the `airdragon` module and use the provided components and layout function. Here's a basic example:
 
+```python
+import air
+import airdragon as ad
 
+app = air.Air()
 
+@app.page
+def index():
+    return ad.layout(
+        ad.H1('Hello, world', class_='Dragons'),
+        ad.Card(
+            air.Header(
+                air.H2('Card title'),
+                air.P('I am a handy paragraph.')
+            ),
+            air.Section(
+                ad.ButtonGroup(
+                    ad.Button('Click me'),
+                    ad.Button("Don't click me", modifier=ad.ButtonMods.destructive)
+                )
+            )
+        )        
+    )
+```
