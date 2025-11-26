@@ -56,6 +56,10 @@ app = air.Air()
 @app.page
 def index():
     return ad.layout(
+        # Adding a class_ to an AirDragon tag appends it to the list of
+        # tailwind classes applied to that tag by AirDragon.
+        # So this will be 
+        # <h1 class="text-3xl sm:text-4xl font-semibold leading-tight Dragons">
         ad.H1('Hello, world', class_='Dragons'),
         ad.Card(
             air.Header(
