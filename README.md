@@ -21,6 +21,8 @@ To install AirDragon's Python component, run the following command in your termi
 uv add airdragon
 ```
 
+### AirDragon with a Jinja base template
+
 AirDragon's `layout()` function handles the JS dependencies for you, but if you need to include them in Jinja, use the following HTML snippets:
 
 ```html
