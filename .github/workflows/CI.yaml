@@ -1,0 +1,104 @@
+# .github/workflows/CI.yml
+# This workflow will install Python dependencies, run tests and lint with a variety of Python versions
+# CI using uv + just, with minimal/noise-free logs:
+# - Colors forced inside a tiny wrapper script (not via step `env:`), so they don’t appear in the log header.
+# - No echo/group commands shown.
+# - Shared bootstrap steps are DRY via YAML anchors.
+
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+    tags:
+      - '*'   # matches any tag name
+  pull_request:
+    branches: [ main ]
+
+env:
+  COLUMNS: 150
+  UV_FROZEN: true
+  FORCE_COLOR: 1
+  RUFF_OUTPUT_FORMAT: github
+  RUFF_NO_CACHE: true
+  JUST_COLOR: always
+  JUST_COMMAND_COLOR: purple
+  JUST_EXPLAIN: true
+  JUST_HIGHLIGHT: true
+  PYREFLY_COLOR: always
+
+# Cancel older runs for the same branch/PR (concurrency = run one at a time).
+# When you push several commits in a row, only the newest run continues; older ones are cancelled.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+# Least-privilege token by default.
+permissions:
+  contents: read
+
+# Consistent shell across OSes;
+# Only `run.shell` / `run.working-directory` are supported here.
+defaults:
+  run:
+    shell: bash --noprofile --norc -euo pipefail {0}
+
+jobs:
+  lint:
+    name: Check for formatting and linting violations (via just, uv, ruff)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+      - uses: taiki-e/install-action@just
+      - uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41 # v7
+      - name: Check for formatting and linting violations
+        run: just lint
+#   type-check:
+#     name: Type Checking (via just, uv, ty, pyrefly)
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 15
+#     steps:
+#       - uses: actions/checkout@v5
+#       - uses: taiki-e/install-action@just
+#       - uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41 # v7
+#       - name: Type Checking
+#         run: just type-check
+  test-all:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ ubuntu-latest, windows-latest, macos-latest ]
+        python-version: [ "3.13", "3.14" ]
+        resolution-strategy: [ "highest", "lowest" ]
+    name: Tests • ${{ matrix.os }} • Python ${{ matrix.python-version }}
+      • resolution-strategy ${{ matrix.resolution-strategy }} (via just, uv, pytest, pytest-pretty)
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v5
+      - uses: taiki-e/install-action@just
+      - uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41 # v7
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run all the tests
+        env:
+          UV_RESOLUTION: ${{ matrix.resolution-strategy }}
+        run: just test
+#   coverage-xml:
+#     if: github.actor != 'dependabot[bot]' && github.actor != 'renovate[bot]'
+#     name: Send Coverage to Codecov
+#     runs-on: ubuntu-latest
+#     timeout-minutes: 25
+#     steps:
+#       - uses: actions/checkout@v5
+#       - uses: taiki-e/install-action@just
+#       - uses: astral-sh/setup-uv@85856786d1ce8acfbcc2f13a5f3fbd6b938f9f41 # v7
+#       - name: Generating an XML Coverage Report
+#         run: just coverage-xml
+#       - name: Upload Coverage Report to Codecov
+#         uses: codecov/codecov-action@v5
+#         with:
+#           files: coverage.xml
+#           fail_ci_if_error: true
+#           token: ${{ secrets.CODECOV_TOKEN }}
