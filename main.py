@@ -80,4 +80,16 @@ def index():
                 ),
             ),
         ),
+        ad.Article(
+            ad.Form(
+                ad.H3("Form"),
+                air.Div(
+                    air.Label("Email", class_="label", for_="email"),
+                    air.Input(
+                        class_="input", id="email", type="email", placeholder="Email"
+                    ),
+                    class_="grid gap-3",
+                ),
+            )
+        ),
     )

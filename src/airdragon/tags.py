@@ -164,9 +164,17 @@ class Card(DragonTag):
         return f"""<div{self.attrs}>{self.children}</div>"""
 
 
+class Form(DragonTag):
+    class_ = "form grid gap-6"
+
+
 class H1(DragonTag):
     class_ = "text-3xl sm:text-4xl font-semibold leading-tight"
 
 
 class H2(DragonTag):
     class_ = "text-2xl sm:text-3xl font-semibold leading-tight"
+
+
+class H3(DragonTag):
+    class_ = "text-xl sm:text-2xl font-semibold leading-tight"
