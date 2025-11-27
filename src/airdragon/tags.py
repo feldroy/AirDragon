@@ -177,4 +177,4 @@ class H2(DragonTag):
 
 
 class H3(DragonTag):
-    class_ = "text-2xl sm:text-3xl font-semibold leading-tight"
+    class_ = "text-xl sm:text-2xl font-semibold leading-tight"
