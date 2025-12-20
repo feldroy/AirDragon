@@ -74,3 +74,26 @@ def test_H3():
         html
         == '<h3 class="text-xl sm:text-2xl font-semibold leading-tight">Subheading</h3>'
     )
+
+
+def test_Input():
+    html = ad.Input(placeholder="Search").render()
+    assert html == '<input type="text" placeholder="Search" class="input"/>'
+
+
+def test_Input_with_attrs():
+    html = ad.Input(type="search", name="q", id="search-box").render()
+    assert html == '<input type="search" name="q" id="search-box" class="input"/>'
+
+
+def test_Link():
+    html = ad.Link("Click here", href="https://example.com").render()
+    assert html == '<a href="https://example.com" class="link">Click here</a>'
+
+
+def test_Link_with_target():
+    html = ad.Link("External", href="https://example.com", target="_blank").render()
+    assert (
+        html
+        == '<a href="https://example.com" target="_blank" class="link">External</a>'
+    )

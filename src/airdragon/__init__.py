@@ -15,4 +15,6 @@ from .tags import (
     H1 as H1,
     H2 as H2,
     H3 as H3,
+    Input as Input,
+    Link as Link,
 )
