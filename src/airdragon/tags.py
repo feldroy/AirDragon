@@ -178,3 +178,81 @@ class H2(DragonTag):
 
 class H3(DragonTag):
     class_ = "text-xl sm:text-2xl font-semibold leading-tight"
+
+
+class Input(DragonTagSelfClosing):
+    """A styled input field using BasecoatUI's input class.
+
+    Renders an <input> element with consistent styling for forms and search bars.
+
+    Args:
+        type: The input type (e.g., "text", "search", "email", "password").
+            Defaults to "text".
+        name: The form field name for submission.
+        id: The element's unique identifier.
+        placeholder: Hint text displayed when the input is empty.
+        value: The initial value of the input.
+        class_: Additional CSS classes to append to the default "input" class.
+        style: Inline CSS styles.
+        **kwargs: Additional HTML attributes (e.g., autofocus, required, disabled).
+
+    Example:
+        >>> ad.Input(type="search", name="q", placeholder="Search...")
+        <input type="search" name="q" placeholder="Search..." class="input"/>
+    """
+
+    class_ = "input"
+
+    def __init__(
+        self,
+        *,
+        type: str = "text",
+        name: str | None = None,
+        id: str | None = None,
+        placeholder: str | None = None,
+        value: str | None = None,
+        class_: str | None = None,
+        style: str | None = None,
+        **kwargs: AttributeType,
+    ) -> None:
+        super().__init__(**kwargs | locals_cleanup(locals()))
+
+    def render(self):
+        return f"""<input{self.attrs}/>"""
+
+
+class Link(DragonTag):
+    """A styled anchor link using BasecoatUI's link class.
+
+    Renders an <a> element with consistent styling for navigation and references.
+
+    Args:
+        *children: The link text or nested elements to display.
+        href: The URL the link points to (required).
+        class_: Additional CSS classes to append to the default "link" class.
+        id: The element's unique identifier.
+        style: Inline CSS styles.
+        target: Where to open the link (e.g., "_blank" for new tab).
+        **kwargs: Additional HTML attributes (e.g., rel, download, hx_get).
+
+    Example:
+        >>> ad.Link("Visit site", href="https://example.com", target="_blank")
+        <a href="https://example.com" target="_blank" class="link">Visit site</a>
+    """
+
+    class_ = "link"
+
+    def __init__(
+        self,
+        *children: Renderable,
+        href: str,
+        class_: str | None = None,
+        id: str | None = None,
+        style: str | None = None,
+        target: str | None = None,
+        **kwargs: AttributeType,
+    ) -> None:
+        super().__init__(*children, **kwargs | locals_cleanup(locals()))
+
+    def render(self) -> str:
+        return f"""<a{self.attrs}>{self.children}</a>"""
