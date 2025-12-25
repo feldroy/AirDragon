@@ -3,7 +3,7 @@ from enum import StrEnum, EnumType
 
 import air
 from air.tags.utils import locals_cleanup
-from air.tags.types import Renderable, AttributeType
+from air.tags.models.types import Renderable, AttributeType
 
 
 class Mods(StrEnum):
