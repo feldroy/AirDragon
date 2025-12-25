@@ -1,7 +1,7 @@
 from typing import Any
 
 import air
-from air.tags.types import AttributeType
+from air.tags.models.types import AttributeType
 
 
 def layout(*children: Any, **kwargs: AttributeType) -> air.Html | air.Children:
